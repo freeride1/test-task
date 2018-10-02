@@ -1,0 +1,9 @@
+---
+# tasks file for nginx
+
+- name: NGINX config from default
+  template:
+    src: ~/wordpress-ansible/roles/nginx/templates/default
+    dest: /etc/nginx/sites-available/default
+  notify:
+    - restart nginx

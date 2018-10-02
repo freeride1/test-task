@@ -1,0 +1,30 @@
+--- #Time to start)
+- hosts: master
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  roles:
+    - server
+    - php
+    - mysql
+    - wordpress
+    - apache
+    - nginx
+
+
+- hosts: slave
+  remote_user: ansible
+  become: yes
+  become_method: sudo
+  connection: ssh
+  gather_facts: yes
+  roles:
+    - server
+    - php
+    - wordpress
+    - apache
+    - nginx
+
+

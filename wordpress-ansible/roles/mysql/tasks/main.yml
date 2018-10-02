@@ -1,0 +1,18 @@
+# tasks file for mysql
+---
+- name: Create mysql database
+  mysql_db: name={{ wp_mysql_db }} state=present
+
+- name: Create mysql user
+  mysql_user: 
+    name={{ wp_mysql_user }} 
+    password={{ wp_mysql_password }} 
+    priv=*.*:ALL
+    host='%'
+
+- name: MySQL config file change
+  lineinfile:
+    dest=/etc/mysql/mysql.conf.d/mysqld.cnf
+    state=present
+    regexp='^bind-address*'
+    line='bind-address            = 0.0.0.0'

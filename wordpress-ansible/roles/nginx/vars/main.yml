@@ -1,0 +1,5 @@
+---
+# vars file for nginx
+
+domain: ec2-54-194-211-134.eu-west-1.compute.amazonaws.com
+root_dir: /var/www/wordpress
