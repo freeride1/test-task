@@ -1,0 +1,28 @@
+upstream backend {
+{% for host in groups ['backend'] %}
+	server {{ host }}:8081;
+{% endfor %}
+}
+server {
+listen *:80; ## listen for ipv4
+server_name {{groups['slave'][0]}};
+access_log /var/log/nginx/access.log;
+
+location / {
+##### вот если использоватьэтот вариант этот вариант, то работает... но как понимаем балансировки нету
+#{{groups['slave'][0]}}:8081/;
+##### ------------------------
+
+##### а вот этот вариант работает без картинок... что очень странно
+proxy_pass http://backend;
+#proxy_connect_timeout 120;
+#proxy_send_timeout 120;
+#proxy_read_timeout 180;
+}
+
+#location ~* \.(jpg|jpeg|gif|png|ico|css|bmp|swf|js|html|txt)$ {
+#root var/www/wordpress
+#}
+}
+
+
