@@ -1,0 +1,9 @@
+[apache]
+ec2-54-194-211-134.eu-west-1.compute.amazonaws.com
+
+[nginx]
+ec2-54-77-74-49.eu-west-1.compute.amazonaws.com
+
+[mysql]
+ec2-34-247-174-138.eu-west-1.compute.amazonaws.com
+
