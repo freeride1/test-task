@@ -1,30 +1,33 @@
 --- #Time to start)
-- hosts: master
+#- hosts: mysql
+#  remote_user: ansible
+#  become: yes
+#  become_method: sudo
+#  connection: ssh
+#  gather_facts: yes
+#  vars_files:  
+#    - /home/ansible/wordpress-ansible/global_vars.yml 
+#  roles:
+#    - mysql
+
+- hosts: apache
   remote_user: ansible
   become: yes
   become_method: sudo
   connection: ssh
   gather_facts: yes
+  vars_files:
+    - /home/ansible/wordpress-ansible/global_vars.yml
   roles:
-    - server
-    - php
-    - mysql
-    - wordpress
     - apache
-    - nginx
 
-
-- hosts: slave
-  remote_user: ansible
-  become: yes
-  become_method: sudo
-  connection: ssh
-  gather_facts: yes
-  roles:
-    - server
-    - php
-    - wordpress
-    - apache
-    - nginx-slave
+#- hosts: nginx
+#  remote_user: ansible
+#  become: yes
+#  become_method: sudo
+#  connection: ssh
+#  gather_facts: yes
+#  roles:
+#    - nginx
 
 

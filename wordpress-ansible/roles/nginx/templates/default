@@ -1,20 +1,20 @@
 upstream backend {
-{% for host in groups ['backend'] %}
+{% for host in groups ['apache'] %}
 	server {{ host }}:8081;
 {% endfor %}
 }
 server {
 listen *:80; ## listen for ipv4
-server_name {{groups['master'][0]}};
+server_name {{groups['apache'][0]}};
 access_log /var/log/nginx/access.log;
 
 location / {
 ##### вот если использоватьэтот вариант этот вариант, то работает... но как понимаем балансировки нету
-#{{groups['master'][0]}}:8081/;
+proxy_pass http://{{groups['apache'][0]}}:8081/;
 ##### ------------------------
 
 ##### а вот этот вариант работает без картинок... что очень странно
-proxy_pass http://backend;
+#proxy_pass http://backend;
 #proxy_connect_timeout 120;
 #proxy_send_timeout 120;
 #proxy_read_timeout 180;
