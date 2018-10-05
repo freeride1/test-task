@@ -54,9 +54,15 @@
     - {'regexp': "define\\('DB_HOST', '(.)+'\\);", 'line': "define('DB_HOST', '{{groups['mysql'][0]}}');"}
 
 
-- name: Query test
-  command: mysql -h {{groups['mysql'][0]}} -u {{ wp_mysql_user }} -p{{ wp_mysql_password }} -e "INSERT INTO {{ wp_mysql_db }}.wp_users (`ID`, `user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES ('{{item}}', 'user{{item}}', MD5('demo'), 'Your Name', 'test{{item}}@yourdomain.com', 'http://www.test.com/', '2011-06-07 00:00:00', '', '0', 'Your Name');"
+- name: WP users creation with variables and items 
+  command: mysql -h {{groups['mysql'][0]}} -u {{ wp_mysql_user }} -p{{ wp_mysql_password }} -e "INSERT INTO {{ wp_mysql_db }}.wp_users (`user_login`, `user_pass`, `user_nicename`, `user_email`, `user_url`, `user_registered`, `user_activation_key`, `user_status`, `display_name`) VALUES ('{{wp_user}}{{item}}', MD5('{{wp_user_pass}}'), 'Your Name', '{{wp_user_email}}', 'http://www.test.com/', '2011-06-07 00:00:00', '', '0', 'Your Name');"
   with_items:
-    - 6
-    - 7
-    - 8
+    - 50
+    - 60
+    - 70
+
+- name: user creation test with max(id) using 
+  command: mysql -h {{groups['mysql'][0]}} -u {{ wp_mysql_user }} -p{{ wp_mysql_password }} -e "INSERT INTO {{ wp_mysql_db }}.wp_users (`user_login`, `user_pass`, `use$
+  with_items:
+    -  (SELECT COALESCE(MAX(id), 0) + 1 FROM {{ wp_mysql_db }}.wp_users)
+
