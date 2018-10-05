@@ -1,0 +1,3 @@
+wp_user: testuser
+wp_user_pass: testpass
+wp_user_email: testuser{{item}}@userdomain.com 
